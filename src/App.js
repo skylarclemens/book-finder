@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./App.css";
+import "./App.scss";
+import SearchResults from "./components/SearchResults/SearchResults";
 
 function App() {
   const [searchText, setSearchText] = useState("");
@@ -9,38 +10,32 @@ function App() {
   const baseUrl = "https://www.googleapis.com/books/v1/volumes?";
   const apiKey = process.env.REACT_APP_API_KEY;
 
+  // GET search results when user has stopped typing for 2 seconds
   useEffect(() => {
-    const handleSearch = () => {
-      if(searchText.length) {
+    if(searchText.length) {
+      const handleSearch = () => {
         axios.get(`${baseUrl}q=${searchText}&key=${apiKey}`)
         .then((res) => {
           setSearchData(res.data.items);
-          console.log('res.data', res.data);
-          console.log('searchData', searchData);
         });
       }
+
+      let debouncer = setTimeout(() => {
+        handleSearch();
+      }, 2000);
+
+      return () => clearTimeout(debouncer);
+    } else {
+      setSearchData([]);
+      return;
     }
-
-    let debouncer = setTimeout(() => {
-      handleSearch();
-    }, 2000);
-
-    return () => clearTimeout(debouncer);
   }, [searchText]);
 
   return (
-    <>
-      <input type="text" name="search" onChange={(e) => setSearchText(e.target.value)}></input>
-      <div className="searchResults">
-        {searchData.map((book) => {
-          return (
-            <div key={book.id}>
-              {book.volumeInfo.title}
-            </div>
-          )
-        })}
-      </div>
-    </>
+    <div className="search-container">
+      <input type="text" placeholder="Search" name="search" onChange={(e) => setSearchText(e.target.value)}></input>
+      <SearchResults books={searchData} />
+    </div>
   );
 }
 
