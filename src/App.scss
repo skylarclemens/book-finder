@@ -6,12 +6,18 @@
 
 body {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+.body-container {
+  margin: 1rem;
 }
 
 .search-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 1rem;
 
   input {
     font-family: 'Inter', Arial, Helvetica, sans-serif;
