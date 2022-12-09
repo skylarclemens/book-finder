@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;300;400;700;900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -9,21 +9,11 @@ body {
   margin: 0;
 }
 
-.body-container {
-  margin: 1rem;
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
+  margin: 0;
 }
 
-.search-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem;
-
-  input {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
-    width: 75%;
-    min-width: 250px;
-    padding: .5rem;
-    font-size: 1rem;
-  }
+h1 {
+  font-size: 2.25rem;
 }

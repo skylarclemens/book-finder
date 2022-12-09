@@ -1,0 +1,44 @@
+.book-container {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.main-info {
+  display: flex;
+  padding-bottom: 2rem;
+}
+
+.main-info-text {
+  padding-left: 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .page-count, .publisher {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+}
+
+.authors {
+  font-family: 'Cormorant Garamond', 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.5rem;
+}
+
+.cover-img {
+  min-width: 128px;
+  border-radius: 0 0.5rem 0.5rem 0;
+  box-shadow: 0px 5px 15px 5px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.25rem 0.375rem;
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+  
+  &.blue {
+    background-color: #d0d1ef;
+  }
+}
