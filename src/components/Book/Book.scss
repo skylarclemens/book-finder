@@ -1,6 +1,5 @@
 .book-container {
-  margin: 1rem;
-  padding: 1rem;
+  padding: 2rem 4rem 4rem 4rem;
 }
 
 .main-info {
@@ -14,16 +13,26 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 0.25rem;
-
-  .page-count, .publisher {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-  }
 }
 
 .authors {
   font-family: 'Cormorant Garamond', 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
   font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.isbn {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.uppercase {
+  font-size: 0.75rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: rgb(104, 104, 104);
 }
 
 .cover-img {
@@ -32,13 +41,22 @@
   box-shadow: 0px 5px 15px 5px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-.pill {
-  display: inline-block;
-  padding: 0.25rem 0.375rem;
-  border-radius: 1rem;
+.break {
   margin: 0.5rem 0;
+  width: 85%;
+  height: 1px;
+  background-color: rgb(224, 217, 212);
+}
+
+.description {
+  .description-heading {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
   
-  &.blue {
-    background-color: #d0d1ef;
+  .description-text {
+    line-height: 1.5;
   }
 }
+

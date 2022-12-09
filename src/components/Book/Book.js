@@ -29,12 +29,20 @@ const Book = () => {
           <div className="main-info-text">
             <h1>{currentBook.title}</h1> 
             <span className="authors">{currentBook.authors}</span>
-            <span className="page-count">{currentBook.pageCount} PAGES</span>
-            <span className="publisher">Published by {currentBook.publisher}</span>
+            <span className="page-count uppercase">{currentBook.pageCount} Pages</span>
+            <span className="publisher uppercase">Published by {currentBook.publisher}</span>
+            <div className="isbn uppercase">
+              {currentBook.industryIdentifiers.map((isbn) => (
+                <span key={isbn.identifier}>{isbn.type}: {isbn.identifier}</span>
+              ))}
+            </div>
           </div>
         </div>
-        <h2>Description</h2>
-        <p dangerouslySetInnerHTML={{ __html: currentBook.description }}></p>
+        <div className="break"></div>
+        <div className="description">
+        <h2 className="description-heading">Description</h2>
+        <p className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></p>
+        </div>
       </div> : '' }
     </div>
   )
