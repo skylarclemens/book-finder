@@ -4,7 +4,7 @@
 
 .main-info {
   display: flex;
-  padding-bottom: 2rem;
+  padding: 0 0 2rem 1rem;
 }
 
 .main-info-text {
@@ -19,6 +19,7 @@
   font-family: 'Cormorant Garamond', 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
   font-size: 1.5rem;
   font-weight: 500;
+  margin-bottom: 0.25rem;
 }
 
 .isbn {
@@ -30,7 +31,7 @@
 
 .uppercase {
   font-size: 0.75rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.05rem;
   text-transform: uppercase;
   color: rgb(104, 104, 104);
 }
@@ -49,6 +50,8 @@
 }
 
 .description {
+  padding: 1rem 0 2rem 1rem;
+
   .description-heading {
     font-size: 1.75rem;
     font-weight: 600;

@@ -40,8 +40,8 @@ const Book = () => {
         </div>
         <div className="break"></div>
         <div className="description">
-        <h2 className="description-heading">Description</h2>
-        <p className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></p>
+          <h2 className="description-heading">Description</h2>
+          <p className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></p>
         </div>
       </div> : '' }
     </div>
