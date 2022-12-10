@@ -9,7 +9,7 @@ const Search = () => {
   const [searchData, setSearchData] = useState([]);
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.REACT_APP_GOOGLE_KEY;
   const inputTimer = 1000;
 
   // GET search results when user has stopped typing for 2 seconds

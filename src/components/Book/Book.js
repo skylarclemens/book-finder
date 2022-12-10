@@ -7,7 +7,7 @@ const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.REACT_APP_GOOGLE_KEY;
   let { id } = useParams();
 
   useEffect(() => {
