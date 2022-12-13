@@ -13,8 +13,8 @@ const Recommended = () => {
   const googleApiKey = process.env.REACT_APP_GOOGLE_KEY;
 
   const getBooks = async () => {
-    const response = await axios.get(`${baseUrl}/lists/overview.json?api-key=${apiKey}`);
-    setBestSellersData(response.data.results.lists);
+    const response = await axios.get(`${baseUrl}/lists/current/combined-print-and-e-book-fiction.json?api-key=${apiKey}`);
+    setBestSellersData(response.data.results.books);
   }
 
   // Get list of Best Sellers from NYT
@@ -27,13 +27,19 @@ const Recommended = () => {
   // Use Google Books API to get info for each best seller
   useEffect(() => {
     if(bestSellersData.length) {
-      const books = bestSellersData[0].books.map((book) => {
-        return axios.get(`${googleBaseUrl}?q=isbn:${book.primary_isbn13}&key=${googleApiKey}`)
+      const books = bestSellersData.map((book) => {
+        return axios.get(`${googleBaseUrl}?q=isbn:${book.isbns[0].isbn13}&key=${googleApiKey}`)
           .then(resp => {
-            return resp.data.items[0];
+            if(resp.data.totalItems > 0) {
+              return resp.data.items[0];
+            }
+            return null;
           })
         });
-      Promise.all(books).then(ar => setBestSellers(ar)); 
+      Promise.all(books).then(ar => {
+        const arCopy = ar.filter(b => b);
+        setBestSellers(arCopy);
+      });
     }
   }, [bestSellersData])
 
@@ -46,7 +52,7 @@ const Recommended = () => {
               <li key={book.id}>
                 <Link to={`/book/${book.id}`}>
                   <div className="bs-list-item">
-                    <img src={book.volumeInfo.imageLinks.thumbnail} alt={`${book.volumeInfo.title} cover`} />
+                    <img src={book.volumeInfo.imageLinks.thumbnail.replace('&edge=curl', '')} alt={`${book.volumeInfo.title} cover`} />
                     
                   </div>
                 </Link>
