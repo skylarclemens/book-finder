@@ -48,7 +48,7 @@ const Search = () => {
               <Link onClick={handleLinkClick} to={`/book/${book.id}`}>
                 <div className="book-item">
                   <div className="book-image-container">
-                    <img className="book-image" src={book.volumeInfo.imageLinks.thumbnail} alt={`${book.volumeInfo.title} cover`} />
+                    <img className="book-image" src={book.volumeInfo?.imageLinks?.thumbnail} alt={`${book.volumeInfo.title} cover`} />
                   </div>
                   <div className="book-info">
                     <span className="title">{book.volumeInfo.title}</span>

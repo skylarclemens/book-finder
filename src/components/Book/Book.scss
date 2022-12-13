@@ -59,3 +59,15 @@
   }
 }
 
+.add-button {
+  background: rgb(35, 159, 37);
+  padding: 0.5rem;
+  border: 1px solid rgb(35, 159, 37);
+  border-radius: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(32, 143, 34);
+  }
+}
