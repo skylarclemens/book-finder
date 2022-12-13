@@ -7,7 +7,7 @@ const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.REACT_APP_GOOGLE_KEY;
   let { id } = useParams();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Book = () => {
       {currentBook ? 
       <div className="book-content">
         <div className="main-info">
-          <img className="cover-img" src={currentBook.imageLinks.thumbnail} />
+          <img className="cover-img" src={currentBook.imageLinks.thumbnail.replace('&edge=curl', '')} />
           <div className="main-info-text">
             <h1>{currentBook.title}</h1> 
             <span className="authors">{currentBook.authors}</span>
