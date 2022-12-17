@@ -11,6 +11,12 @@
   gap: 0.25rem;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .authors {
   font-family: 'Cormorant Garamond', 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
   font-size: 1.5rem;
@@ -33,9 +39,20 @@
 }
 
 .cover-img {
-  min-width: 128px;
+  min-width: 150px;
   border-radius: 0 0.5rem 0.5rem 0;
   box-shadow: 0px 5px 15px 5px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+img {
+  &.missing {
+    display: none;
+  }
+}
+
+.missing {
+  height: 230px;
+  background-color: #b4b4b4;
 }
 
 .break {
@@ -56,13 +73,22 @@
   
   .description-text {
     line-height: 1.5;
+
+    p {
+      margin-bottom: 0.875rem;
+    }
   }
 }
 
 .add-button {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  //letter-spacing: 0.063rem;
+  text-transform: uppercase;
   background: rgb(35, 159, 37);
   border: 1px solid rgb(35, 159, 37);
-  min-width: 150px;
+  min-width: 125px;
   color: #ffffff;
   cursor: pointer;
 

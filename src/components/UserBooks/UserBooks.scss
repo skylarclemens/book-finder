@@ -3,6 +3,9 @@
   border-radius: 0.5rem;
   overflow: hidden;
   margin-top: 1rem;
+  &.empty {
+    display: none;
+  }
 }
 
 .book-list-container {
@@ -65,7 +68,6 @@
 
   .remove-book {
     height: 2.5rem;
-    max-width: 5rem;
     background: rgb(254, 254, 254);
     border: 1px solid rgb(159, 35, 35);
     color: rgb(159, 35, 35);
