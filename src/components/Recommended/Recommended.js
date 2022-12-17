@@ -19,8 +19,11 @@ const Recommended = () => {
 
   // Get list of Best Sellers from NYT
   useEffect(() => {
-    if(!bestSellersData.length) {
+    if(localStorage.getItem("bestSellers") === null) {
       getBooks();
+    } else {
+      const storageBestSellers = JSON.parse(localStorage.getItem("bestSellers"));
+      setBestSellers(storageBestSellers);
     }
   }, [])
 
@@ -39,9 +42,19 @@ const Recommended = () => {
       Promise.all(books).then(ar => {
         const arCopy = ar.filter(b => b);
         setBestSellers(arCopy);
+        localStorage.setItem("bestSellers", JSON.stringify(arCopy));
       });
     }
   }, [bestSellersData])
+
+  if(!bestSellers.length) {
+    return (
+      <>
+        <h1>Best Sellers</h1>
+        <span>Loading...</span>
+      </>
+    );
+  }
 
   return (
       <>
@@ -52,7 +65,7 @@ const Recommended = () => {
               <li key={book.id}>
                 <Link to={`/book/${book.id}`}>
                   <div className="bs-list-item">
-                    <img src={book.volumeInfo.imageLinks.thumbnail.replace('&edge=curl', '')} alt={`${book.volumeInfo.title} cover`} />
+                    <img src={book.volumeInfo?.imageLinks?.thumbnail.replace('&edge=curl', '')} alt={`${book.volumeInfo.title} cover`} />
                     
                   </div>
                 </Link>

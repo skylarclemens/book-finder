@@ -1,17 +1,20 @@
 import './Book.scss';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { appendBook } from '../../reducers/bookReducer';
 
 const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
+  const userBooks = useSelector(state => state.books);
   const dispatch = useDispatch();
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
   const apiKey = process.env.REACT_APP_GOOGLE_KEY;
   let { id } = useParams();
+
+  const inLibrary = (userBooks.filter(book => book.id === id).length > 0);
 
   useEffect(() => {
     bookById(id);
@@ -25,6 +28,7 @@ const Book = () => {
 
   const addBook = () => {
     const newBook = {
+      id: id,
       title: currentBook.title,
       subtitle: currentBook.subtitle,
       description: currentBook.description,
@@ -55,7 +59,11 @@ const Book = () => {
             </div>
           </div>
         </div>
-        <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button>
+        {!inLibrary ?
+          <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
+          <button type="button" className="add-button exists">In your Library</button>
+        }
+        
         <div className="break"></div>
         <div className="description">
           <h2 className="description-heading">Description</h2>

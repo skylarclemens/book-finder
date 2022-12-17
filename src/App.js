@@ -13,7 +13,7 @@ const App = () => {
         <Link to="/">
           <img className="logo" src={BooksImage} alt="Stack of books"/>
         </Link>
-        <Link to="/books">Your Books</Link>
+        <Link to="/books">My Books</Link>
         <Search />
       </div>
       <div className="body-container">
