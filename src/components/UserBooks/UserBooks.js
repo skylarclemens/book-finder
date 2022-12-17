@@ -15,7 +15,9 @@ const UserBooks = () => {
   return (
     <>
       <h1>My Books</h1>
-      <ul className="book-list">
+      <h2>Currently Reading</h2>
+      <h2>My Library</h2>
+      <ul className={`book-list ${!books.length ? 'empty' : ''}`}>
         {booksCopy && booksCopy.map((book) => (
           <li className="user-book" key={book.isbn}>
             <Link className="book-list-container" to={`/book/${book.id}`}>

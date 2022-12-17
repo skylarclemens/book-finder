@@ -15,6 +15,7 @@ const Book = () => {
   let { id } = useParams();
 
   const inLibrary = (userBooks.filter(book => book.id === id).length > 0);
+  const coverImage = currentBook?.imageLinks?.thumbnail.replace('&edge=curl', '');
 
   useEffect(() => {
     bookById(id);
@@ -41,14 +42,24 @@ const Book = () => {
     dispatch(appendBook(newBook));
   }
 
+  if(!currentBook) {
+    return 'Loading...';
+  }
+
   return (
     <div className="book-container">
-      {currentBook ? 
       <div className="book-content">
         <div className="main-info">
-          <img className="cover-img" src={currentBook.imageLinks.thumbnail.replace('&edge=curl', '')} />
+          <div className={`cover-img ${!coverImage && 'missing'}`} />
+          <img className={`cover-img ${!coverImage && 'missing'}`} src={coverImage} />
           <div className="main-info-text">
-            <h1>{currentBook.title}</h1> 
+            <div className="title-container">
+              <h1>{currentBook.title}</h1>
+              {!inLibrary ?
+                <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
+                <button type="button" className="add-button exists">In your Library</button>
+              }
+            </div>
             <span className="authors">{currentBook.authors}</span>
             <span className="page-count uppercase">{currentBook.pageCount} Pages</span>
             <span className="publisher uppercase">Published by {currentBook.publisher}</span>
@@ -59,17 +70,12 @@ const Book = () => {
             </div>
           </div>
         </div>
-        {!inLibrary ?
-          <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
-          <button type="button" className="add-button exists">In your Library</button>
-        }
-        
         <div className="break"></div>
         <div className="description">
           <h2 className="description-heading">Description</h2>
-          <p className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></p>
+          <div className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></div>
         </div>
-      </div> : '' }
+      </div>
     </div>
   )
 }

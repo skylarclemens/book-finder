@@ -40,15 +40,17 @@ const Search = () => {
 
   return (
     <div className="search-container">
-      <input type="text" placeholder="Search" name="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+      <input type="search" placeholder="Search" name="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
       <ul className={`searchResults ${searchData.length ? '' : 'empty'}`}>
         {searchData.map((book) => {
+          const coverImage = book.volumeInfo?.imageLinks?.thumbnail;
           const listItem = book.volumeInfo.title ? 
             <li key={book.id}>
               <Link onClick={handleLinkClick} to={`/book/${book.id}`}>
                 <div className="book-item">
                   <div className="book-image-container">
-                    <img className="book-image" src={book.volumeInfo?.imageLinks?.thumbnail} alt={`${book.volumeInfo.title} cover`} />
+                    <div className={`book-image ${!coverImage && 'missing'}`} />
+                    <img className={`book-image ${!coverImage && 'missing'}`} src={book.volumeInfo?.imageLinks?.thumbnail} alt={`${book.volumeInfo.title} cover`} />
                   </div>
                   <div className="book-info">
                     <span className="title">{book.volumeInfo.title}</span>
