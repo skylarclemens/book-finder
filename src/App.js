@@ -4,6 +4,7 @@ import Search from "./components/Search/Search";
 import Book from "./components/Book/Book";
 import Recommended from "./components/Recommended/Recommended";
 import BooksImage from './books.png';
+import UserBooks from "./components/UserBooks/UserBooks";
 
 const App = () => {
   return (
@@ -12,12 +13,14 @@ const App = () => {
         <Link to="/">
           <img className="logo" src={BooksImage} alt="Stack of books"/>
         </Link>
+        <Link to="/books">My Books</Link>
         <Search />
       </div>
       <div className="body-container">
         <Routes>
           <Route path='/' element={<Recommended />} />
           <Route path='/book/:id' element={<Book />} />
+          <Route path='/books' element={<UserBooks />} />
         </Routes>
       </div>
     </>
