@@ -37,7 +37,8 @@ const Book = () => {
       publisher: currentBook.publisher,
       pageCount: currentBook.pageCount,
       image: currentBook?.imageLinks?.thumbnail.replace('&edge=curl', ''),
-      isbn: currentBook.industryIdentifiers[1].identifier
+      isbn: currentBook.industryIdentifiers[1].identifier,
+      currentlyReading: false
     }
     dispatch(appendBook(newBook));
   }
@@ -50,8 +51,8 @@ const Book = () => {
     <div className="book-container">
       <div className="book-content">
         <div className="main-info">
-          <div className={`cover-img ${!coverImage && 'missing'}`} />
-          <img className={`cover-img ${!coverImage && 'missing'}`} src={coverImage} />
+          <div className={`cover-img ${!coverImage ? 'missing' : 'exists'}`} />
+          <img className={`cover-img ${!coverImage ? 'missing' : ''}`} src={coverImage} />
           <div className="main-info-text">
             <div className="title-container">
               <h1>{currentBook.title}</h1>
