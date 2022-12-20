@@ -1,0 +1,20 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 50%;
+}
+
+.login-button {
+  width: 100px;
+  background: rgb(35, 159, 37);
+  border: 1px solid rgb(35, 159, 37);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(32, 143, 34);
+  }
+}

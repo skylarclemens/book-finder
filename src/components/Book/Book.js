@@ -58,19 +58,19 @@ const Book = () => {
           <div className={`cover-img ${!coverImage ? 'missing' : 'exists'}`} />
           <img className={`cover-img ${!coverImage ? 'missing' : ''}`} src={coverImage} />
           <div className="main-info-text">
-            <div className="title-container">
+            <div className="book-info">
               <h1>{currentBook.title}</h1>
-              {!inLibrary ?
+              <span className="authors">{currentBook.authors}</span>
+              <span className="page-count uppercase">{currentBook.pageCount} Pages</span>
+              <span className="publisher uppercase">Published by {currentBook.publisher}</span>
+            </div>
+            {!inLibrary ?
                 <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
                 <button type="button" className="remove-button" onClick={() => deleteBook(id)}>
                   <span className="default-text">In your Library</span>
                   <span className="hover-text">Remove</span>
                 </button>
-              }
-            </div>
-            <span className="authors">{currentBook.authors}</span>
-            <span className="page-count uppercase">{currentBook.pageCount} Pages</span>
-            <span className="publisher uppercase">Published by {currentBook.publisher}</span>
+            }
             <div className="isbn uppercase">
               {currentBook.industryIdentifiers.map((isbn) => (
                 <span key={isbn.identifier}>{isbn.type}: {isbn.identifier}</span>

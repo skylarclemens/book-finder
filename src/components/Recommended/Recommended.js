@@ -50,7 +50,7 @@ const Recommended = () => {
   if(!bestSellers.length) {
     return (
       <>
-        <h1>Best Sellers</h1>
+        <h2>Best Sellers</h2>
         <span>Loading...</span>
       </>
     );
@@ -58,7 +58,7 @@ const Recommended = () => {
 
   return (
       <>
-        <h1>Best Sellers</h1>
+        <h2>Best Sellers</h2>
         {bestSellers.length ?
           <ul className="best-sellers">
             {bestSellers.map((book) => {
