@@ -29,7 +29,7 @@ const UserBooks = () => {
         <h2>Currently Reading</h2>
         <ul className="book-list">
           {booksReading.length ? booksReading.map((book) => (
-            <li className="user-book" key={book.isbn}>
+            <li className="user-book" key={book.id}>
               <Link className="book-list-container" to={`/book/${book.id}`}>
                 <div className="book-image-container">
                   <img src={book.image} alt={`${book.title} cover`} />
