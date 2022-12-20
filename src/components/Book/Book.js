@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { appendBook } from '../../reducers/bookReducer';
+import { appendBook, removeBook } from '../../reducers/bookReducer';
 
 const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
@@ -37,9 +37,14 @@ const Book = () => {
       publisher: currentBook.publisher,
       pageCount: currentBook.pageCount,
       image: currentBook?.imageLinks?.thumbnail.replace('&edge=curl', ''),
-      isbn: currentBook.industryIdentifiers[1].identifier
+      isbn: currentBook.industryIdentifiers[1].identifier,
+      currentlyReading: false
     }
     dispatch(appendBook(newBook));
+  }
+
+  const deleteBook = (id) => {
+    dispatch(removeBook(id));
   }
 
   if(!currentBook) {
@@ -50,14 +55,17 @@ const Book = () => {
     <div className="book-container">
       <div className="book-content">
         <div className="main-info">
-          <div className={`cover-img ${!coverImage && 'missing'}`} />
-          <img className={`cover-img ${!coverImage && 'missing'}`} src={coverImage} />
+          <div className={`cover-img ${!coverImage ? 'missing' : 'exists'}`} />
+          <img className={`cover-img ${!coverImage ? 'missing' : ''}`} src={coverImage} />
           <div className="main-info-text">
             <div className="title-container">
               <h1>{currentBook.title}</h1>
               {!inLibrary ?
                 <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
-                <button type="button" className="add-button exists">In your Library</button>
+                <button type="button" className="remove-button" onClick={() => deleteBook(id)}>
+                  <span className="default-text">In your Library</span>
+                  <span className="hover-text">Remove</span>
+                </button>
               }
             </div>
             <span className="authors">{currentBook.authors}</span>

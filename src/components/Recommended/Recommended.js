@@ -61,16 +61,17 @@ const Recommended = () => {
         <h1>Best Sellers</h1>
         {bestSellers.length ?
           <ul className="best-sellers">
-            {bestSellers.map((book) => (
-              <li key={book.id}>
+            {bestSellers.map((book) => {
+              const coverImage = book.volumeInfo?.imageLinks?.thumbnail;
+              return (<li key={book.id}>
                 <Link to={`/book/${book.id}`}>
                   <div className="bs-list-item">
-                    <img src={book.volumeInfo?.imageLinks?.thumbnail.replace('&edge=curl', '')} alt={`${book.volumeInfo.title} cover`} />
-                    
+                    <div className={`book-image ${!coverImage && 'missing'}`} />
+                    <img className={`book-image ${!coverImage && 'missing'}`} src={book.volumeInfo?.imageLinks?.thumbnail.replace('&edge=curl', '')} alt={`${book.volumeInfo.title} cover`} />
                   </div>
                 </Link>
-              </li>
-            ))}
+              </li>)
+            })}
           </ul> : ''
         }
       </>
