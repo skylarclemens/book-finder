@@ -2,16 +2,6 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  button {
-    border: 1px solid #727272;
-    color: #727272;
-    background: #ffffff;
-
-    &:hover {
-      cursor: pointer;
-      background: #f6f5f5;
-    }
-  }
 }
 
 .user-reading {

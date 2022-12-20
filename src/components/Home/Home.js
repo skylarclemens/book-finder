@@ -1,27 +1,19 @@
 import './Home.scss';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeUser } from '../../reducers/userReducer';
-
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const user = useSelector(state => state.user);
   const books = useSelector(state => state.books);
-  const dispatch = useDispatch();
 
   const booksReading = books.filter(book => book.currentlyReading === true);
   let userWelcome = null;
-  
-  const handleLogOut = () => {
-    dispatch(removeUser());
-  }
 
   if(user) {
     userWelcome = (
       <>
         <div className="user-welcome">
           <h2>Hello, {user.name}!</h2>
-          <button onClick={handleLogOut}>Log Out</button>
         </div>
         <div className="user-reading">
           <span className="small-text">Currently Reading</span>
