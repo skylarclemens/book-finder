@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { appendBook } from '../../reducers/bookReducer';
+import { appendBook, removeBook } from '../../reducers/bookReducer';
 
 const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
@@ -43,6 +43,10 @@ const Book = () => {
     dispatch(appendBook(newBook));
   }
 
+  const deleteBook = (id) => {
+    dispatch(removeBook(id));
+  }
+
   if(!currentBook) {
     return 'Loading...';
   }
@@ -58,7 +62,10 @@ const Book = () => {
               <h1>{currentBook.title}</h1>
               {!inLibrary ?
                 <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
-                <button type="button" className="add-button exists">In your Library</button>
+                <button type="button" className="remove-button" onClick={() => deleteBook(id)}>
+                  <span className="default-text">In your Library</span>
+                  <span className="hover-text">Remove</span>
+                </button>
               }
             </div>
             <span className="authors">{currentBook.authors}</span>
