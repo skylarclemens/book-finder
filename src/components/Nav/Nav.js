@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Search from "../Search/Search";
 import { removeUser } from '../../reducers/userReducer';
 import BooksImage from '../../books.png';
-import ProfileImage from '../../profile.png'
+import ProfileImage from '../../profile.png';
+import { supabase } from '../../supabaseClient';
 
-const Nav = () => {
+const Nav = ({ session }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -23,7 +24,8 @@ const Nav = () => {
         <img src={ProfileImage} alt="User profile"/>
       </button>
       {openDropdown ? <div className="user-dropdown">
-        <button className="log-out" onClick={handleLogOut}>Log Out</button>
+        <Link to="/account">Account</Link>
+        <button className="log-out" onClick={() => supabase.auth.signOut()}>Log Out</button>
       </div> : ''}
     </div>
   )
@@ -37,7 +39,7 @@ const Nav = () => {
       <Link className="nav-link" to="/books">My Books</Link>
       <Link className="nav-link" to="/browse">Browse</Link>
       <Search />
-      {!user ? <Link className="nav-link" to="/login">Log In</Link> : userNav}
+      {!session ? <Link className="nav-link" to="/login">Log In</Link> : userNav}
     </div>
   )
 }
