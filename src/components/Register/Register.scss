@@ -1,0 +1,20 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 50%;
+}
+
+.register-button {
+  background: rgb(35, 159, 37);
+  border: 1px solid rgb(35, 159, 37);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  width: 200px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(32, 143, 34);
+  }
+}

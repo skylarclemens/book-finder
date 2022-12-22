@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from 'react-router-dom';
 import './Search.scss';
+import { useEffect, useState, useRef } from "react";
+import { Link } from 'react-router-dom';
+import useClickOut from '../../hooks/useClickOut';
+import axios from "axios";
+
 
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const searchResults = useRef(null);
+  useClickOut(searchResults, () => {
+    setSearchData([]);
+  });
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
   const apiKey = process.env.REACT_APP_GOOGLE_KEY;
@@ -41,7 +47,7 @@ const Search = () => {
   return (
     <div className="search-container">
       <input type="search" placeholder="Search" name="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-      <ul className={`searchResults ${searchData.length ? '' : 'empty'}`}>
+      <ul ref={searchResults} className={`searchResults ${searchData.length ? '' : 'empty'}`}>
         {searchData.map((book) => {
           const coverImage = book.volumeInfo?.imageLinks?.thumbnail;
           const listItem = book.volumeInfo.title ? 

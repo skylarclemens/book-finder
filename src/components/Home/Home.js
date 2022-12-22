@@ -13,7 +13,7 @@ const Home = () => {
     userWelcome = (
       <>
         <div className="user-welcome">
-          <h2>Hello, {user.name}!</h2>
+          <h2>Hello, {user.user_metadata.full_name}!</h2>
         </div>
         <div className="user-reading">
           <span className="small-text">Currently Reading</span>

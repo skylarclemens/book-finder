@@ -1,32 +1,41 @@
 import './Nav.scss';
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Search from "../Search/Search";
 import { removeUser } from '../../reducers/userReducer';
 import BooksImage from '../../books.png';
 import ProfileImage from '../../profile.png';
 import { supabase } from '../../supabaseClient';
+import useClickOut from '../../hooks/useClickOut';
 
 const Nav = ({ session }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const user = useSelector(state => state.user);
+  const dropdownEl = useRef(null);
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
-    setOpenDropdown(false);
+    closeDropdown();
+    supabase.auth.signOut();
     dispatch(removeUser());
   }
+
+  const closeDropdown = () => {
+    setOpenDropdown(false);
+  }
+
+  useClickOut(dropdownEl, closeDropdown);
 
   const userNav = (
     <div className="user-nav-container">
       <button className="user-nav" onClick={() => setOpenDropdown(!openDropdown)}>
         <img src={ProfileImage} alt="User profile"/>
       </button>
-      {openDropdown ? <div className="user-dropdown">
-        <Link to="/account">Account</Link>
-        <button className="log-out" onClick={() => supabase.auth.signOut()}>Log Out</button>
-      </div> : ''}
+      <div ref={dropdownEl} className={`user-dropdown ${openDropdown ? 'open' : ''}`}>
+        <Link to="/account" onClick={closeDropdown}>Account</Link>
+        <button className="log-out" onClick={handleLogOut}>Log Out</button>
+      </div>
     </div>
   )
    

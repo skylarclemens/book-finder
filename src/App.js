@@ -9,6 +9,7 @@ import Account from "./components/Account/Account";
 import Home from './components/Home/Home';
 import Recommended from "./components/Recommended/Recommended";
 import Nav from "./components/Nav/Nav";
+import Register from "./components/Register/Register";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -32,6 +33,7 @@ const App = () => {
           <Route path='/book/:id' element={<Book />} />
           <Route path='/books' element={<UserBooks />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/browse' element={<Recommended />} />
           <Route path='/account' element={<Account session={session} />} />
         </Routes>
