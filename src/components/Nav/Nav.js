@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Search from "../Search/Search";
 import { removeUser } from '../../reducers/userReducer';
+import { resetBooks } from '../../reducers/bookReducer';
 import BooksImage from '../../books.png';
 import ProfileImage from '../../profile.png';
 import { supabase } from '../../supabaseClient';
@@ -15,10 +16,18 @@ const Nav = ({ session }) => {
   const dropdownEl = useRef(null);
   const dispatch = useDispatch();
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     closeDropdown();
-    supabase.auth.signOut();
+
+    const { error } = await supabase.auth.signOut();
+
+    if(error) {
+      console.error(error);
+      return;
+    }
+
     dispatch(removeUser());
+    dispatch(resetBooks());
   }
 
   const closeDropdown = () => {

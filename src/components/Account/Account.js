@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { removeUser } from '../../reducers/userReducer';
+import { resetBooks } from '../../reducers/bookReducer';
 import { supabase } from '../../supabaseClient';
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState(null);
   const [website, setWebsite] = useState(null);
+  const currentUser = useSelector(state => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(session) {
-      getProfile();
+    if(!currentUser) {
+      navigate('/login');
+      return;
     }
+    
+    getProfile();
   }, [session]);
 
   const getProfile = async () => {
@@ -65,11 +73,18 @@ const Account = ({ session }) => {
     }
   }
 
-  const handleSignOut = () => {
-    supabase.auth.signOut()
-      .then(() => {
-        navigate('/login')
-      })
+  //TO-DO: Make a sign out service
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if(error) {
+      console.error(error);
+      return;
+    }
+
+    dispatch(removeUser());
+    dispatch(resetBooks());
+    navigate('/login');
   }
 
   return (
@@ -78,7 +93,7 @@ const Account = ({ session }) => {
         'Saving...'
       ) : (
         <form onSubmit={updateProfile}>
-          <div>Email: {session.user.email}</div>
+          <div>Email: {session?.user?.email}</div>
           <div>
             <label htmlFor="username">Name</label>
             <input
@@ -102,7 +117,7 @@ const Account = ({ session }) => {
           </div>
         </form>
       )}
-      <button type="button" onClick={() => supabase.auth.signOut()}>
+      <button type="button" onClick={handleSignOut}>
         Log Out
       </button>
     </>

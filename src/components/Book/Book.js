@@ -4,32 +4,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { appendBook, removeBook } from '../../reducers/bookReducer';
+import { supabase } from '../../supabaseClient';
 
 const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
   const userBooks = useSelector(state => state.books);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const baseUrl = "https://www.googleapis.com/books/v1/volumes";
   const apiKey = process.env.REACT_APP_GOOGLE_KEY;
   let { id } = useParams();
 
-  const inLibrary = (userBooks.filter(book => book.id === id).length > 0);
-  const coverImage = currentBook?.imageLinks?.thumbnail.replace('&edge=curl', '');
+  const inLibrary = userBooks.filter(book => book?.books?.google_id === id);
+  //TO-DO: Fix image URL update after adding/removing a book from library
+  const coverImage = inLibrary.length ? currentBook?.image : currentBook?.imageLinks?.thumbnail.replace('&edge=curl', '');
 
   useEffect(() => {
+    const bookById = async (bookId) => {
+      const response = await axios.get(`${baseUrl}/${bookId}?key=${apiKey}`);
+      const data = response.data
+      setCurrentBook(data.volumeInfo);
+    }
+
+    if(inLibrary.length) {
+      setCurrentBook(inLibrary[0].books);
+      return;
+    }
     bookById(id);
   }, [id]);
 
-  const bookById = async (bookId) => {
-    const response = await axios.get(`${baseUrl}/${bookId}?key=${apiKey}`);
-    const data = response.data
-    setCurrentBook(data.volumeInfo);
-  }
-
-  const addBook = () => {
+  const addBook = async () => {
     const newBook = {
-      id: id,
+      google_id: id,
       title: currentBook.title,
       subtitle: currentBook.subtitle,
       description: currentBook.description,
@@ -37,14 +44,49 @@ const Book = () => {
       publisher: currentBook.publisher,
       pageCount: currentBook.pageCount,
       image: currentBook?.imageLinks?.thumbnail.replace('&edge=curl', ''),
-      isbn: currentBook.industryIdentifiers[1].identifier,
-      currentlyReading: false
+      isbn: currentBook.industryIdentifiers
     }
-    dispatch(appendBook(newBook));
+
+    const { data, error } = await supabase.from('books').upsert(newBook, {
+      onConflict: 'google_id', ignoreDuplicates: false,
+    }).select();
+
+    if(error) {
+      console.error(error);
+      return;
+    }
+
+    const newUserBook = {
+      book_id: data[0].id,
+      user_id: user.id
+    }
+
+    const { error2 } = await supabase.from('user_book').insert(newUserBook);
+
+    if(error2) {
+      console.error(error2);
+      return;
+    }
+
+    dispatch(appendBook({
+      tag: null,
+      books: data[0]
+    }));
   }
 
-  const deleteBook = (id) => {
-    dispatch(removeBook(id));
+  const deleteBook = async (bookId) => {
+    try {
+      const { error } = await supabase
+      .from('user_book')
+      .delete()
+      .eq('book_id', bookId);
+
+      if(error) throw error;
+
+      dispatch(removeBook(bookId));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if(!currentBook) {
@@ -64,15 +106,15 @@ const Book = () => {
               <span className="page-count uppercase">{currentBook.pageCount} Pages</span>
               <span className="publisher uppercase">Published by {currentBook.publisher}</span>
             </div>
-            {!inLibrary ?
+            {!inLibrary.length ?
                 <button type="button" className="add-button" onClick={() => addBook()}>Add to your Books</button> :
-                <button type="button" className="remove-button" onClick={() => deleteBook(id)}>
+                <button type="button" className="remove-button" onClick={() => deleteBook(currentBook.id)}>
                   <span className="default-text">In your Library</span>
                   <span className="hover-text">Remove</span>
                 </button>
             }
             <div className="isbn uppercase">
-              {currentBook.industryIdentifiers.map((isbn) => (
+              {currentBook.isbn.map((isbn) => (
                 <span key={isbn.identifier}>{isbn.type}: {isbn.identifier}</span>
               ))}
             </div>

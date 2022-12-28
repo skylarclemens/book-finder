@@ -10,19 +10,45 @@ import Home from './components/Home/Home';
 import Recommended from "./components/Recommended/Recommended";
 import Nav from "./components/Nav/Nav";
 import Register from "./components/Register/Register";
+import { initializeBooks, resetBooks } from "./reducers/bookReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "./reducers/userReducer";
 
 const App = () => {
   const [session, setSession] = useState(null);
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session }}) => {
+    supabase.auth.getSession().then(({ data: { session, user }}) => {
       setSession(session);
+      if(!user) {
+        dispatch(removeUser());
+        dispatch(resetBooks());
+      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data, error } = await supabase.from('user_book')
+        .select('tag, books(*)');
+
+      if(error) {
+        console.error(error);
+        return;
+      }
+      
+      dispatch(initializeBooks(data));
+    }
+    if(user) {
+      getData();
+    }
+  }, [user]);
 
   return (
     <>
