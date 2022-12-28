@@ -1,15 +1,11 @@
-.heading {
-  margin-bottom: 0.5rem;
-}
-
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   max-width: 50%;
 }
 
-.login-button {
+.register-button {
   background: rgb(35, 159, 37);
   border: 1px solid rgb(35, 159, 37);
   color: #ffffff;
@@ -20,17 +16,5 @@
 
   &:hover {
     background: rgb(32, 143, 34);
-  }
-}
-
-.input-field {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-  gap: 0.5rem;
-  label {
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    letter-spacing: 1px;
   }
 }
