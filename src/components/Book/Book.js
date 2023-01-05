@@ -1,6 +1,7 @@
 import './Book.scss';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Rating from './Rating/Rating';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { appendBook, removeBook } from '../../reducers/bookReducer';
@@ -8,6 +9,7 @@ import { supabase } from '../../supabaseClient';
 
 const Book = () => {
   const [currentBook, setCurrentBook] = useState(null);
+  const [showText, setShowText] = useState(false);
   const userBooks = useSelector(state => state.books);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -97,9 +99,12 @@ const Book = () => {
     <div className="book-container">
       <div className="book-content">
         <div className="main-info">
-          <div className={`cover-img ${!coverImage ? 'missing' : 'exists'}`} />
-          <img className={`cover-img ${!coverImage ? 'missing' : ''}`} src={coverImage} />
-          <div className="main-info-text">
+          <div className="book-left">
+            <div className={`cover-img ${!coverImage ? 'missing' : 'exists'}`} />
+            <img className={`cover-img ${!coverImage ? 'missing' : ''}`} src={coverImage} />
+            <Rating />
+          </div>
+          <div className="book-right">
             <div className="book-info">
               <h1>{currentBook.title}</h1>
               <span className="authors">{currentBook.authors}</span>
@@ -118,12 +123,13 @@ const Book = () => {
                 <span key={isbn.identifier}>{isbn.type}: {isbn.identifier}</span>
               ))}
             </div>
+            <div className="break"></div>
+            <div className="description">
+              <h2 className="description-heading">Description</h2>
+              <div className={`description-text ${showText ? 'show' : 'hide'}`} dangerouslySetInnerHTML={{ __html: currentBook.description }}></div>
+              <button className="description-show-more" onClick={() => setShowText(!showText)}>Show {`${showText ? 'Less' : 'More'}`}</button>
+            </div>
           </div>
-        </div>
-        <div className="break"></div>
-        <div className="description">
-          <h2 className="description-heading">Description</h2>
-          <div className="description-text" dangerouslySetInnerHTML={{ __html: currentBook.description }}></div>
         </div>
       </div>
     </div>

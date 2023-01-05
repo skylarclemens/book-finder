@@ -80,7 +80,7 @@ const UserBooks = () => {
                   </div>
                 </Link>
                 <div className="update-button">
-                  <button onClick={() => handleReading(book.id, 'currently-reading')} className="update-book">Currently Reading</button>
+                  <button onClick={() => handleReading(book.id, 'currently-reading')} className="update-book">Want to Read</button>
                 </div>
               </li>
             }

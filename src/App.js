@@ -22,10 +22,6 @@ const App = () => {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session, user }}) => {
       setSession(session);
-      if(!user) {
-        dispatch(removeUser());
-        dispatch(resetBooks());
-      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
