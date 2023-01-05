@@ -12,7 +12,7 @@ import Nav from "./components/Nav/Nav";
 import Register from "./components/Register/Register";
 import { initializeBooks, resetBooks } from "./reducers/bookReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUser } from "./reducers/userReducer";
+import UserBook from "./components/BookStats/BookStats";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     const getData = async () => {
       const { data, error } = await supabase.from('user_book')
-        .select('tag, books(*)');
+        .select('*, books(*)');
 
       if(error) {
         console.error(error);
@@ -53,7 +53,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/book/:id' element={<Book />} />
-          <Route path='/books' element={<UserBooks />} />
+          <Route path='/my-books/:id' element={<UserBook />} />
+          <Route path='/my-books' element={<UserBooks />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/browse' element={<Recommended />} />

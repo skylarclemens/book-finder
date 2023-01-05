@@ -50,14 +50,13 @@ const Nav = ({ session }) => {
    
   return (
     <div className="navigation">
-      <Link to="/">
-        <img className="logo" src={BooksImage} alt="Stack of books"/>
+      <Link to="/" className="logo">
+        Zine
       </Link>
-      <Link className="nav-link" to="/">Home</Link>
-      <Link className="nav-link" to="/books">My Books</Link>
-      <Link className="nav-link" to="/browse">Browse</Link>
+      <Link className="nav-link" to="/my-books">MY BOOKS</Link>
+      <Link className="nav-link" to="/browse">BROWSE</Link>
       <Search />
-      {!session ? <Link className="nav-link" to="/login">Log In</Link> : userNav}
+      {!session ? <Link className="nav-link" to="/login">LOG IN</Link> : userNav}
     </div>
   )
 }

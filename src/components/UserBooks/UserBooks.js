@@ -42,20 +42,21 @@ const UserBooks = () => {
         <h2>Currently Reading</h2>
         <ul className="book-list">
           {booksReading.length ? booksReading.map((currBook) => {
-            const book = currBook.books
+            const bookInfo = currBook.books
+            const progress = currBook.pages_read/bookInfo.pageCount;
             return (
-              <li className="user-book" key={book.id}>
-                <Link className="book-list-container" to={`/book/${book.google_id}`}>
+              <li className="user-book" key={bookInfo.id}>
+                <Link className="book-list-container" to={`/my-books/${bookInfo.id}`}>
                   <div className="book-image-container">
-                    <img src={book.image} alt={`${book.title} cover`} />
+                    <img src={bookInfo.image} alt={`${bookInfo.title} cover`} />
                   </div>
                   <div className="book-info">
-                    <span className="title">{book.title}</span>
-                    <span>{book.authors}</span>
+                    <span className="title">{bookInfo.title}</span>
+                    <span>{bookInfo.authors}</span>
                   </div>
                 </Link>
-                <div className="update-button">
-                  <button onClick={() => handleReading(book.id, null)} className="update-book reading-button">Remove from Reading</button>
+                <div className="book-progress">
+                  {`${progress}%`} 
                 </div>
               </li>
             )
@@ -70,7 +71,7 @@ const UserBooks = () => {
             if(currBook.tag !== 'currently-reading') {
               const book = currBook.books;
               bookList = <li className="user-book" key={book.id}>
-                <Link className="book-list-container" to={`/book/${book.google_id}`}>
+                <Link className="book-list-container" to={`/my-books/${book.id}`}>
                   <div className="book-image-container">
                     <img src={book.image} alt={`${book.title} cover`} />
                   </div>

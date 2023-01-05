@@ -1,29 +1,80 @@
-.user-welcome {
+.home-heading {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  h2 {
+    font-family: 'Inter';
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+    margin-bottom: 0;
+  }
+
+  .small-text {
+    color: #7D7D7D;
+  }
+
+  .heading-emoji {
+    font-size: 2.25rem;
+  }
 }
 
-.user-reading {
-  margin: 1rem 0;
-}
-
-.reading-container {
+.card-container {
   display: flex;
-  margin: 0.5rem 0;
+  gap: 3rem;
+  margin-left: 3.25rem;
+
+  .book-card {
+    display: flex;
+    gap: 1.25rem;
+  }
+
   a {
     text-decoration: none;
-  }
-
-  .book-list-container {
-    display: flex;
+    color: #000000;
   }
 }
 
-.book-reading {
+.book-card-info {
   display: flex;
-  flex-basis: content;
-  border: 1px solid #000000;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .main-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .percent {
+    font-size: 0.75rem;
+  }
+
+  .progress-bar {
+    width: 164px;
+    height: 3px;
+    background-color: #CFCFCF;
+  }
+}
+
+.book-card-image {
+  max-width: 100px;
   border-radius: 0.5rem;
-  padding: 0.5rem 0.875rem 0 0.5rem;
+  overflow: hidden;
+}
+
+.section {
+  margin-bottom: 4.5rem;
 }
