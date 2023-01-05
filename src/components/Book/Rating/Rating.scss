@@ -1,0 +1,9 @@
+.rating button {
+  color: #29231a;
+  background-color: #ffffff;
+  border: 1px solid #d5d5d5;
+  &:hover {
+    background-color: #f2f0ef;
+    border-radius: 0.5rem;
+  }
+}
