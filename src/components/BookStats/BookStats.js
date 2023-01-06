@@ -20,13 +20,18 @@ const UserBook = () => {
     return 'Loading...'
   }
 
-  const progress = currentBook?.pages_read/currentBook.books?.pageCount;
+  const progress = currentBook?.pages_read/currentBook.books?.pageCount*100;
 
   return (
     <div className="stats-container">
-      <h1>{bookInfo.title}</h1>
-      <span>{bookInfo.authors}</span>
-      <span>{`Current Progress: ${progress}%`}</span>
+      <div className="stats-image">
+        <img src={bookInfo.image} alt={`${bookInfo.title} cover`} />
+      </div>
+      <div className="stats-info">
+        <h1>{bookInfo.title}</h1>
+        <span>{bookInfo.authors}</span>
+        <span>{`Current Progress: ${progress}%`}</span>
+      </div>
     </div>
   )
 }

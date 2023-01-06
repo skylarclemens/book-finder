@@ -1,7 +1,10 @@
+.home-container {
+  padding-left: 2rem;
+}
+
 .home-heading {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  position: relative;
+  display: inline-block;
   margin-bottom: 1rem;
   h2 {
     font-family: 'Inter';
@@ -16,6 +19,8 @@
   }
 
   .heading-emoji {
+    position: absolute;
+    left: -55px;
     font-size: 2.25rem;
   }
 }
@@ -23,11 +28,12 @@
 .card-container {
   display: flex;
   gap: 3rem;
-  margin-left: 3.25rem;
+  overflow: hidden;
 
   .book-card {
     display: flex;
     gap: 1.25rem;
+    max-width: 375px;
   }
 
   a {
@@ -65,14 +71,24 @@
   .progress-bar {
     width: 164px;
     height: 3px;
+    border-radius: 3px;
     background-color: #CFCFCF;
+
+    .progress-fill {
+      height: 3px;
+      background-color: #64C2E0;
+      border-radius: 3px;
+    }
   }
 }
 
 .book-card-image {
   max-width: 100px;
-  border-radius: 0.5rem;
   overflow: hidden;
+
+  img {
+    border-radius: 0.5rem;
+  }
 }
 
 .section {
