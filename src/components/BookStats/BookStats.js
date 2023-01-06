@@ -20,7 +20,7 @@ const UserBook = () => {
     return 'Loading...'
   }
 
-  const progress = currentBook?.pages_read/currentBook.books?.pageCount*100;
+  const progress = Math.floor(currentBook?.pages_read/currentBook.books?.pageCount*100);
 
   return (
     <div className="stats-container">

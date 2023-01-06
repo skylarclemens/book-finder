@@ -23,7 +23,9 @@ const Home = () => {
               <span className="small-text">{`${booksReading ? booksReading.length : '0'} book${booksReading.length > 1 ? 's' : ''}`}</span>
             </div>
           </div>
-          <BookCard booksList={booksReading} />
+          <div className="card-container">
+            {booksReading ? booksReading.map(currBook => <BookCard key={currBook.id} book={currBook} />) : ''}
+          </div>
         </div>
         <div className="library section">
           <div className="home-heading">
@@ -33,7 +35,9 @@ const Home = () => {
               <span className="small-text">{`${booksLibrary ? booksLibrary.length : '0'} book${booksLibrary.length > 1 ? 's' : ''}`}</span>
             </div>
           </div>
-          <BookCard booksList={booksLibrary} />
+          <div className="card-container">
+            {booksLibrary ? booksLibrary.map(currBook => <BookCard key={currBook.id} book={currBook} />) : ''}
+          </div>
         </div>
         <div className="completed section">
           <div className="home-heading">
@@ -43,7 +47,9 @@ const Home = () => {
               <span className="small-text">{`${booksComplete ? booksComplete.length : '0'} book${booksComplete.length > 1 ? 's' : ''}`}</span>
             </div>
           </div>
-          <BookCard booksList={booksComplete} />
+          <div className="card-container">
+            {booksComplete ? booksComplete.map(currBook => <BookCard key={currBook.id} book={currBook} />) : ''}
+          </div>
         </div>
       </div>
     );
