@@ -43,7 +43,7 @@ const UserBooks = () => {
         <ul className="book-list">
           {booksReading.length ? booksReading.map((currBook) => {
             const bookInfo = currBook.books
-            const progress = currBook.pages_read/bookInfo.pageCount*100;
+            const progress = Math.floor(currBook.pages_read/bookInfo.pageCount*100);
             return (
               <li className="user-book" key={bookInfo.id}>
                 <Link className="book-list-container" to={`/my-books/${bookInfo.id}`}>
