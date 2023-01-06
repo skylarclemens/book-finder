@@ -1,4 +1,15 @@
 .stats-container {
   display: flex;
+  gap: 1.25rem;
+}
+
+.stats-image {
+  img {
+    border-radius: 0.5rem;
+  }
+}
+
+.stats-info {
+  display: flex;
   flex-direction: column;
 }
