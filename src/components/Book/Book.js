@@ -19,19 +19,13 @@ const Book = () => {
   let { id } = useParams();
 
   const inLibrary = userBooks.filter(book => book?.books?.google_id === id);
-  //TO-DO: Fix image URL update after adding/removing a book from library
-  const coverImage = inLibrary.length ? currentBook?.image : currentBook?.imageLinks?.thumbnail.replace('&edge=curl', '');
+  const coverImage = currentBook?.imageLinks?.thumbnail.replace('&edge=curl', '');
 
   useEffect(() => {
     const bookById = async (bookId) => {
       const response = await axios.get(`${baseUrl}/${bookId}?key=${apiKey}`);
       const data = response.data
       setCurrentBook(data.volumeInfo);
-    }
-
-    if(inLibrary.length) {
-      setCurrentBook(inLibrary[0].books);
-      return;
     }
     bookById(id);
   }, [id]);
@@ -53,26 +47,36 @@ const Book = () => {
       onConflict: 'google_id', ignoreDuplicates: false,
     }).select();
 
+    console.log('data', data);
+
     if(error) {
       console.error(error);
       return;
     }
 
+    addUserBook(data[0].id, user.id, data[0])
+  }
+
+  const addUserBook = async (bookId, userId, bookData) => {
     const newUserBook = {
-      book_id: data[0].id,
-      user_id: user.id
+      book_id: bookId,
+      user_id: userId
     }
 
-    const { error2 } = await supabase.from('user_book').insert(newUserBook);
+    const { data, error } = await supabase.from('user_book').insert(newUserBook).select();
 
-    if(error2) {
-      console.error(error2);
+    console.log('data2', data);
+
+    if(error) {
+      console.error(error);
       return;
     }
 
+    const userBookData = data[0];
+
     dispatch(appendBook({
-      tag: null,
-      books: data[0]
+      ...userBookData,
+      books: bookData
     }));
   }
 
@@ -119,7 +123,7 @@ const Book = () => {
                 </button>
             }
             <div className="isbn uppercase">
-              {currentBook.isbn.map((isbn) => (
+              {currentBook.industryIdentifiers.map((isbn) => (
                 <span key={isbn.identifier}>{isbn.type}: {isbn.identifier}</span>
               ))}
             </div>
