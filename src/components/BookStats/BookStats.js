@@ -28,7 +28,7 @@ const UserBook = () => {
         <img src={bookInfo.image} alt={`${bookInfo.title} cover`} />
       </div>
       <div className="stats-info">
-        <h1>{bookInfo.title}</h1>
+        <h1 className="info-title">{bookInfo.title}</h1>
         <span>{bookInfo.authors}</span>
         <span>{`Current Progress: ${progress}%`}</span>
       </div>

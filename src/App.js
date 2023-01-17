@@ -13,6 +13,7 @@ import Register from "./components/Register/Register";
 import { initializeBooks, resetBooks } from "./reducers/bookReducer";
 import { useDispatch, useSelector } from "react-redux";
 import UserBook from "./components/BookStats/BookStats";
+import { removeUser, setUser } from "./reducers/userReducer";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -20,13 +21,27 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session, user }}) => {
+    const checkUser = async () => {
+      const { error } = await supabase.auth.getUser();
+
+      if(error) {
+        console.error(error);
+        dispatch(removeUser())
+        return;
+      }
+    }
+    
+    checkUser();
+
+    supabase.auth.getSession().then(({ data: { session }}) => {
       setSession(session);
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') dispatch(setUser(session.user));
+      if (event === 'SIGNED_OUT') dispatch(setUser(removeUser()));
     });
+
   }, []);
 
   useEffect(() => {
@@ -48,7 +63,7 @@ const App = () => {
 
   return (
     <>
-      <Nav session={session}/>
+      <Nav />
       <div className="body-container">
         <Routes>
           <Route path='/' element={<Home />} />
