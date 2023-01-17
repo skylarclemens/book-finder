@@ -47,8 +47,6 @@ const Book = () => {
       onConflict: 'google_id', ignoreDuplicates: false,
     }).select();
 
-    console.log('data', data);
-
     if(error) {
       console.error(error);
       return;
@@ -60,12 +58,11 @@ const Book = () => {
   const addUserBook = async (bookId, userId, bookData) => {
     const newUserBook = {
       book_id: bookId,
-      user_id: userId
+      user_id: userId,
+      page_count: bookData?.pageCount
     }
 
     const { data, error } = await supabase.from('user_book').insert(newUserBook).select();
-
-    console.log('data2', data);
 
     if(error) {
       console.error(error);

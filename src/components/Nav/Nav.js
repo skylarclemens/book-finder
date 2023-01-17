@@ -10,7 +10,7 @@ import ProfileImage from '../../profile.png';
 import { supabase } from '../../supabaseClient';
 import useClickOut from '../../hooks/useClickOut';
 
-const Nav = ({ session }) => {
+const Nav = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const user = useSelector(state => state.user);
   const dropdownEl = useRef(null);
@@ -56,7 +56,7 @@ const Nav = ({ session }) => {
       <Link className="nav-link" to="/my-books">MY BOOKS</Link>
       <Link className="nav-link" to="/browse">BROWSE</Link>
       <Search />
-      {!session ? <Link className="nav-link" to="/login">LOG IN</Link> : userNav}
+      {!user ? <Link className="nav-link" to="/login">LOG IN</Link> : userNav}
     </div>
   )
 }

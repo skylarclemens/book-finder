@@ -12,4 +12,15 @@
 .stats-info {
   display: flex;
   flex-direction: column;
+
+  .info-title {
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .small-text {
+    color: #7D7D7D;
+  }
 }
